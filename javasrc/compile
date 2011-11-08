@@ -1,0 +1,3 @@
+java -mx4024M -classpath ../javalib/antlrworks-1.4.3.jar org.antlr.Tool Casen.g
+rm *.class
+javac -classpath ../javalib/antlrworks-1.4.3.jar *.java
