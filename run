@@ -1,0 +1,1 @@
+java -mx1024M -classpath javalib/antlrworks-1.4.3.jar:out/production/Casen CasenCompiler $1
