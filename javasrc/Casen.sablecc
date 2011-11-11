@@ -284,7 +284,8 @@ Productions
 	context_expr {-> expr} =  {simple} c_begin expr c_end {-> expr.expr};
 
 	atom_expr {-> expr} =
-		  {index} atom l_bkt expr r_bkt {-> New expr.index(atom.expr,expr.expr) }
+		  {simple} atom {-> atom.expr}
+	|	  {index} atom l_bkt expr r_bkt {-> New expr.index(atom.expr,expr.expr) }
 	|	  {dot} atom dot identifier {-> New expr.field(atom.expr,identifier)};
 
 
