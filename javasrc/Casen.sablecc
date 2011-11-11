@@ -217,7 +217,7 @@ Productions
     	|	 {minus_assign}   minus_assign {-> New assign_op.minus_assign(minus_assign)}
     	|	 {shl_assign}     shl_assign {-> New assign_op.shl_assign(shl_assign)}
     	|	 {shr_assign}     shr_assign {-> New assign_op.shr_assign(shr_assign)}
-    	|	 {amp_assign}     amp_assign {-> New assign_op.and_expr(amp_assign)}
+    	|	 {amp_assign}     amp_assign {-> New assign_op.and_assign(amp_assign)}
     	|	 {caret_assign}   caret_assign {-> New assign_op.xor_assign(caret_assign)}
     	|	 {bar_assign}     bar_assign {-> New assign_op.or_assign(bar_assign)} ;
 
@@ -243,7 +243,7 @@ Productions
 	|	 {and} and_expr amp eq_expr {-> New expr.int_to_int_binop(and_expr.expr,New int_to_int_binop.and(amp),eq_expr.expr)};
 	
 	eq_expr {-> expr} = 
-		{simple} ineq_expr {ineq_expr.expr}
+		{simple} ineq_expr {-> ineq_expr.expr}
 	|	{eq}  eq_expr eq ineq_expr {-> New expr.num_to_bool_binop(eq_expr.expr,New num_to_bool_binop.eq(eq),ineq_expr.expr)}
 	|	{neq} eq_expr neq ineq_expr {-> New expr.num_to_bool_binop(eq_expr.expr,New num_to_bool_binop.neq(neq),ineq_expr.expr)};
 
@@ -291,7 +291,7 @@ Productions
 	atom {-> expr} =
 	     {identifier} identifier {-> New expr.identifier(identifier)}
 	|    {lidentifier} local_identifier {-> New expr.local_identifier(local_identifier)}
-	|    {noarg} l_par r_par {-> New expr.args(()) } 
+	|    {noarg} l_par r_par {-> New expr.args([]) } 
 	|    {args}  l_par arglist r_par {-> New expr.args([arglist.expr]) }
 	|    {integer} integer_literal {-> New expr.integer(integer_literal) }
 	|    {float} floating_point_literal {-> New expr.float(floating_point_literal)}
@@ -344,7 +344,7 @@ Abstract Syntax Tree
 	 |     {bool_to_bool_unop}  [op]:bool_to_bool_unop  [expr]:expr
 	 |     {int_to_int_unop}  [op]:int_to_int_unop  [expr]:expr
 	 |     {num_to_num_unop}  [op]:num_to_num_unop  [expr]:expr
-	 |     {apply} [left]:expr [context]:expr [right]:expr
+	 |     {apply} [left]:expr [context]:expr? [right]:expr
 	 |     {index} [base]:expr [index]:expr
 	 |     {field} [base]:expr [field]:identifier
 	 |     {identifier} identifier

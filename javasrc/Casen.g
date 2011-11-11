@@ -149,11 +149,11 @@ unop_expr
     ;
 
 apply_expr 
-    :    context_expr  (context_expr)*  -> context_expr ^(APPLY context_expr)*
+    :    (atom_expr -> atom_expr) ( c=context_expr -> ^(APPLY $apply_expr $c))*
     ;
 
 context_expr
-    : atom_expr ('[[' expr ']]')? -> atom_expr ^(CONTEXT expr)?
+    : ('[[' expr ']]')? atom_expr -> ^(CONTEXT expr)? atom_expr
     ;
 
 atom_expr 
